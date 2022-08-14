@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="contactcss.css" />
+  </head>
+  <body>
+    <center>
+      <div class="contact_section">
+        <h1>Contact Us</h1>
+        <br><br><br><br><br>
+        <form action="http://localhost:5500/ContactUs" class="contact_form" method="POST" >
+         
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name"
+            class="contact_form_text"
+            placeholder="Your Name"
+          />
+          <br> <br><br>
+         
+          <label for="email">Email</label>
+          <input  type="email" id="email" name="email"
+            class="contact_form_text"
+            placeholder="Your Email"
+          />
+          <br> <br><br>
+          <label for="message">Message</label>
+          <textarea  class="contact_form_textarea" id="message" name="message"
+            placeholder="Your Message"
+          ></textarea>
+          <br> <br><br>
+          <input type="submit" class="contact_form_btn" value="send" />
+        </form>
+      </div>
+    </center>
+  </body>
+</html>
