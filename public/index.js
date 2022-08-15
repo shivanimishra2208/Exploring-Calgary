@@ -1,3 +1,4 @@
+
 deleteSVG='<button id="delete" class="btn btn-dark">Delete</button>'
 editSVG=  '<button id="edit" class="btn btn-light">Edit</button>'
  updateSVG = ' <button id="update" class= "btn btn-danger">update</button>'
@@ -25,7 +26,7 @@ if(Array.isArray(savedComment)){
   const saveComment=(arr)=>{
     localStorage.setItem("arr",JSON.stringify(arr))
   }*/
-  window.addEventListener('load', async () => {
+ window.addEventListener('load', async () => {
   const options = {
     method: 'GET',
     headers: {
@@ -35,10 +36,10 @@ if(Array.isArray(savedComment)){
   try {
     const response = await fetch(uri, options)
     const data = await response.json()
+    console.log(data)
     if (Array.isArray(data)) {
       data.forEach(t => {
-        addlist(t.title, t._id)
-      })
+        addlist(t.title, t._id) })
     }
   } catch(err) 
 {
@@ -52,17 +53,41 @@ const saveComment= async title =>{
     headers:{
       "Content-Type" : 'application/json'
     },
-    body: JSON.parse(title)
+    body: JSON.stringify(title)
   }
 
   try{
     const response = await fetch(uri, options)
-    const data = await response.json()
+    const data =  response.json()
+    console.log("data", data)
   }
   catch(err){
     console.error(err.message)
   }
 }
+
+const editCommentText= async title=>{
+  const options={
+    method: 'PATCH',
+    headers:{
+      "Content-Type" : 'application/json'
+    },
+    body: JSON.stringify(title)
+  }
+
+  try{
+    const response = await fetch(`${uri}/${title._id}`, options)
+    const data =  response.json()
+
+    console.log(`${uri}/${title._id}`)
+  }
+  catch(err){
+    console.error(err.message)
+  }
+}
+
+
+
 
 
  //fuction for deleting Id from array
@@ -74,9 +99,10 @@ const saveComment= async title =>{
 
 }
 const editComment = (id, newtext) => {
-  const index = arr.findIndex(title => title.id === id)
-  if (index !== -1) arr[index].title = newtext
-  saveComment(arr)
+  const index = arr.findIndex(titles => titles._id === id)
+  if (index !== -1) arr[index].titles = newtext
+  editCommentText(arr[index])
+  //saveComment(arr)
 }
 
 const addlist = inputText=>{
@@ -140,15 +166,12 @@ const deleted =   document.createElement("span")
 commentsection.appendChild(mainDiv)
 }
 
-addbtn.addEventListener( 'click',(event) => {
+addbtn.addEventListener( 'click',async(event) => {
     event.preventDefault()
-    addlist(userText.value, getId())
-  arr.push({
-     id: getId(true),
-   title: userText.value
-  })
+  const   newid=getId(true)
+   addlist(userText.value, getId())
+   saveComment({title:{title: userText.value}})
   userText.value=''
-   saveComment(arr)
    
 })
 const getId=(isNew)=>{

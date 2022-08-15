@@ -1,7 +1,12 @@
 const commentModel = require("../db/models").UserComment
  
-const getComment=(req ,res) =>{ 
-    res.send("to get")
+const getComment= async (req ,res) =>{ 
+ try{ const getComments= await commentModel.find().exec()
+    res.send(getComments)
+    return
+}catch (err){
+  res.status(500).send("sever not found")
+}
 }
 const getOneComment = async (req, res) => {
     try {
@@ -14,20 +19,39 @@ const getOneComment = async (req, res) => {
   }
   const postComment= async (req,res)=>{
     try{
-        const comm= req.body
-        console.log(comm)
-        const newComm= await commentModel.create(comm)
+        const {title}= req.body
+        console.log(title)
+        const newComm= await commentModel.create(title)
         res.send(newComm)
         return
     }catch (err){
         res.status(500).send(err.message)
     }
   }
-  const updateComment= (req,res)=>{
-    res.send("update")
+  const updateComment= async (req,res)=>{
+    try {
+      const { _id } = req.params
+      const {title } = req.body
+      if (!_id) res.status(404).send('Not Found')
+  
+      await commentModel.updateOne({ _id }, {title }).exec()
+      const updateComment= await commentModel.findById(_id).exec()
+      res.send(updateComment)
+    } catch (err) {
+      res.status(500).send('Server error')
+    }
   }
-  const deleteComment =(req,res)=>{
-    res.send("delete")
+  
+  const deleteComment = async(req,res)=>{
+    try{
+      const {_id}= req.params
+      if(!_id) res.status(404).send("ID not Found")
+      await commentModel.findByIdAndDelete(_id).exec()
+      res.send ({message:`Comment with ID ${_id} has been deleted.`})
+    }catch (err){
+      res.status(500).send("Some error with Server")
+    }
+  
   }
 
 

@@ -15,11 +15,10 @@ app.set("view engine", "pug")
 //app.set('views','./views')
 
 app.use(express.static('public'))
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-app.use(express.urlencoded({ extended: true }))
-
-app.route("/testimonials/:id")
+app.route("/testimonials/:_id")
 .get(getOneComment)
 .patch(updateComment)
 .delete(deleteComment)
