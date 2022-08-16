@@ -76,7 +76,6 @@ const saveComment= async titles =>{
     },
     body: JSON.stringify(titles)
   }
-
   try{
     const response = await fetch(`${uri}/${titles._id}`, options)
     const data =  response.json()
@@ -86,9 +85,8 @@ const saveComment= async titles =>{
   catch(err){
     console.error(err.message)
   }
-}       */
-
- //fuction for deleting Id from array
+}*/
+//function for deleting Id from array
  deleteComment=async id =>{
   const index= arr.findIndex(titles=> titles._id===id)
   if(index!== -1){
@@ -144,7 +142,6 @@ updivtext.setAttribute("id",id)
 const textId= updivtext.getAttribute("id")
 updivtext.classList.add("newlist")
 mainDiv.appendChild(updivtext);
-
  //const textId =mainDiv.getAttribute("id", getId())
 
   //span for edit and delete button repetition
@@ -154,8 +151,8 @@ mainDiv.appendChild(updivtext);
   mainDiv.appendChild(edit)
 
   edit.addEventListener("click", (newtext)=>{
-    updivtext.focus()
-    updivtext.contentEditable= "true"
+   updivtext.focus()
+   updivtext.contentEditable= "true"
    editComment(textId,updivtext.innerText)
     })// mainDiv.remove
 

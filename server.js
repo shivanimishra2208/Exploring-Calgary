@@ -9,6 +9,7 @@ const { getOneComment, deleteComment, updateComment, getComment, postComment } =
 const postMessage= require("./controllers/contactus.controllers")
 const PORT= process.env.PORT  || 3000
 const comments= require('./data/comment.json')
+const { userLogin,signUp } = require("./controllers/login.controllers")
 
 app.set("view engine", "pug")
 //app.set('views','./views')
@@ -30,9 +31,10 @@ app.route("/testimonials")
 
 app.post('/ContactUs',postMessage)
 
-    
-//app.get("/testimonials" ,(req ,res) =>{ 
-//res.send(comments)
+ app.post('/Login', userLogin) 
+
+ app.post("/SignUp",signUp)
+
 
 
 
