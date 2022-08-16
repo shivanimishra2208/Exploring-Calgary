@@ -1,4 +1,5 @@
 
+
 deleteSVG='<button id="delete" class="btn btn-dark">Delete</button>'
 editSVG=  '<button id="edit" class="btn btn-light">Edit</button>'
  //updateSVG = ' <button id="update" class= "btn btn-danger">update</button>'
@@ -36,10 +37,10 @@ if(Array.isArray(savedComment)){
   try {
     const response = await fetch(uri, options)
     const data = await response.json()
-    console.log(data)
     if (Array.isArray(data)) {
       data.forEach(t => {
         addlist(t.title, t._id) })
+        arr=data
     }
   } catch(err) 
 {
@@ -66,7 +67,8 @@ const saveComment= async titles =>{
   }
 }
 
-const editCommentText= async titles=>{
+const updateText= async (titles,_id)=>{
+  console.log(titles)
   const options={
     method: 'PATCH',
     headers:{
@@ -77,10 +79,9 @@ const editCommentText= async titles=>{
 
   try{
     const response = await fetch(`${uri}/${titles._id}`, options)
-    const data = await response.json()
+    const data =  response.json()
       arr=data
       console.log(`${uri}/${titles._id}`)
-
   }
   catch(err){
     console.error(err.message)
@@ -91,29 +92,31 @@ const editCommentText= async titles=>{
  deleteComment=async id =>{
   const index= arr.findIndex(titles=> titles._id===id)
   if(index!== -1){
-    const options = {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-  }
-}
+   const options={
+    method:"DELETE",
+    Headers:{
+      "Content-Type": 'application/json'
+     }
+    }
  try {
   const response = await fetch(`${uri}/${id}`, options)
-  await response.json()
+  const data= response.json()
 } catch (err) {
   console.error(err.message)
   //arr.splice(index, 1)
   //saveComment(arr)
 }
+  }
  }
+
 const editComment = (id, newtext) => {
-  const index = arr.findIndex(titles=> titles._id === id)
-  if (index !== -1){ 
-    arr[index].title = newtext.textContent
-  editCommentText(arr[index])
+  const index = arr.findIndex(titles=> titles._id ===id)
+  if (index !==-1){ 
+    arr[index].title = newtext
+  updateText(arr[index])
+  console.log(newtext)
   //saveComment(arr)
-}
+} console.log(index)
 }
 
 const addlist = (inputText,id)=>{
@@ -139,15 +142,15 @@ mainDiv.appendChild(updivtext);
   edit.classList.add("editbutton")
   mainDiv.appendChild(edit)
 
-  edit.addEventListener("click", ()=>{
+  edit.addEventListener("click", (newtext)=>{
     updivtext.focus()
     updivtext.contentEditable= "true"
-    editComment(textId,updivtext.innerText)
+   editComment(textId,updivtext.innerText)
     })// mainDiv.remove
 
    updivtext.addEventListener("blur", ()=>{
     updivtext.contentEditable="false"
-    editComment(textId,updivtext)
+    //updateText(textId,updivtext)
   })
   
 const deleted =   document.createElement("span")
@@ -157,7 +160,7 @@ const deleted =   document.createElement("span")
 
  deleted.addEventListener("click", ()=>{
        mainDiv.remove(),
-       deleteComment(_id)
+       deleteComment(textId)
          
      
  })
@@ -167,7 +170,6 @@ commentsection.appendChild(mainDiv)
 
 addbtn.addEventListener( 'click',async(event) => {
     event.preventDefault()
-  const   newid=getId(true)
    addlist(userText.value, getId())
    saveComment({title:{title: userText.value}})
   userText.value=''
