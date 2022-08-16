@@ -67,7 +67,7 @@ const saveComment= async titles =>{
   }
 }
 
-const updateText= async (titles,_id)=>{
+/*const updateText= async (titles,_id)=>{
   console.log(titles)
   const options={
     method: 'PATCH',
@@ -86,7 +86,7 @@ const updateText= async (titles,_id)=>{
   catch(err){
     console.error(err.message)
   }
-}
+}       */
 
  //fuction for deleting Id from array
  deleteComment=async id =>{
@@ -109,15 +109,26 @@ const updateText= async (titles,_id)=>{
   }
  }
 
-const editComment = (id, newtext) => {
-  const index = arr.findIndex(titles=> titles._id ===id)
-  if (index !==-1){ 
-    arr[index].title = newtext
-  updateText(arr[index])
-  console.log(newtext)
-  //saveComment(arr)
-} console.log(index)
-}
+const editComment = async(id, newtext) => {
+  const options={
+    method: 'PATCH',
+    headers:{
+      "Content-Type" : 'application/json'
+    },
+    body: JSON.stringify({title:newtext})
+  }
+
+  try{
+    const response = await fetch(`${uri}/${id}`, options)
+    const data = await response.json()
+      arr=data
+      console.log(`${uri}/${id}`)
+  }
+  catch(err){
+    console.error(err.message)
+  }
+}   
+
 
 const addlist = (inputText,id)=>{
     if (!inputText){

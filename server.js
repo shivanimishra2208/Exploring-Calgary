@@ -3,7 +3,6 @@ const express=require("express")
 require("./db")()
 
 
-
 const app=express()
 const uuid=require("uuid")
 const { getOneComment, deleteComment, updateComment, getComment, postComment } = require("./controllers/comment.controller")
