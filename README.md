@@ -24,3 +24,8 @@ and also for POST ,PATCH and DELETE operations
 
 Also made a Contact Us page to send the messages and concerns.
 As this page just containes post operations so createda API for POST request to store the data and information in the database.
+
+Created a structure for login page and connected it to backend.
+
+YET TO BE IMPLEMENTED:
+Authorisation for User Login and create JWT.
