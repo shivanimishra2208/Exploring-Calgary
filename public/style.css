@@ -1,5 +1,6 @@
 body{
-    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),url("Asset/calgary.jpeg")
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),url("Asset/login.jpg.jpg");
+    background-size: cover;
 }
 #heading{
     margin-right: 420px;
