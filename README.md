@@ -11,7 +11,8 @@ For Frontend used javaScript to implement the functionality for CRUD operations 
 Used MOngoDB in backend for Database and all the operations on this page get stored in the database.
 NodeJS and EXPRESS JS has served the backend. Initiated NPM to publish, discover, install, and develop node programs.
 Installed Nodemon for restarting the node application when file changes in the directory are detected.
-created Resting API's for this:
+
+Created Resting API's for this:-
 
 For populating the Comments stored in the database from the users
 GET /all itmes:
@@ -27,5 +28,7 @@ As this page just containes post operations so createda API for POST request to 
 
 Created a structure for login page and connected it to backend.
 
-YET TO BE IMPLEMENTED:
-Authorisation for User Login and create JWT.
+LOGIN AND REGISTER:
+
+I implemented login and sign up operations in Login page of the website. Created a API in server. Made a controller for User Login.
+Used BycryptJS to encrypt the credentials of the user in the Database. 
