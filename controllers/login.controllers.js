@@ -34,6 +34,7 @@ try{
      const passwordHash= await bcrypt.hash(password, 10)
        const response= await loginModel.create({email,passwordHash})
           res.send('Registration successfully done.')
+          
 } catch(err){
        res.status(500).send(err.message)
 }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <center>
+        
+    <div class="loginbox">
+        <h1>Login</h1>
+
+        <form action="http://localhost:5500/Login" class="contact_form" method="POST" >
+
+             <p>Email</p>
+            <label for="email"></label>
+            <input type="text" id="email" name="email"
+              class="login_form_text"
+              placeholder=" Your Email id"
+            /><br>
+
+            <p>Password</p>
+            <label for="password"></label>
+            <input  type="password" id="password" name="password"
+              class="login_form_text"
+              placeholder="Your password" />
+              <input type="submit" name="submit" value="Login"><br>
+              <a href="#">Forgot Password</a><br>
+              <a href="http://localhost:5500/SignUp.html">Don't have an account?</a><br>
+
+    </form>
+    </div>
+   </center>
+</body>
+</html>
