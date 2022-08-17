@@ -16,4 +16,17 @@ body{
 }
 .desc{
     color:rgb(167, 185, 192);
+
+}
+.gallery a{
+
+    text-decoration: none;
+    line-height: 20px;
+    color: aliceblue;
+    font-size:  20px;
+
+}
+.gallery a:hover{
+    cursor: pointer;
+    color:yellow;
 }
