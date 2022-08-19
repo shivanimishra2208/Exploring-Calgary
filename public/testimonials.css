@@ -67,3 +67,12 @@ margin-bottom: 10px;
 .editbutton{
     margin-right: 6px;
 }
+.footer  {    
+    
+    text-align: center;
+   margin-bottom: px;
+   margin-top: 90px;
+   font-weight: bold;
+   border: 30px;
+  background-color: darkslategray;
+}
