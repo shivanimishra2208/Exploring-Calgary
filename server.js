@@ -5,28 +5,22 @@ require("./db")()
 
 const app=express()
 const uuid=require("uuid")
+var cors = require('cors')
+const cookieparser= require('cookie-parser')
 const { getOneComment, deleteComment, updateComment, getComment, postComment } = require("./controllers/comment.controller")
 const postMessage= require("./controllers/contactus.controllers")
 const PORT= process.env.PORT  || 3000
 const comments= require('./data/comment.json')
 const { userLogin,signUp } = require("./controllers/login.controllers")
+const { auth, adminAuth } = require("./auth/main")
 
+app.use(express.json())
 app.set("view engine", "pug")
-//app.set('views','./views')
-
+app.use(cookieparser())
+//app.set('views','./view
+app.use(cors())
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
-
-app.route("/testimonials/:_id")
-.get(getOneComment)
-.patch(updateComment)
-.delete(deleteComment)
-
-app.route("/testimonials")
-.get(getComment)
-.post(postComment)
-
 
 
 app.post('/ContactUs',postMessage)
@@ -34,6 +28,20 @@ app.post('/ContactUs',postMessage)
  app.post('/Login', userLogin) 
 
  app.post("/SignUp",signUp)
+
+ 
+ app.route("/testimonials")
+.get(getComment)
+.post(postComment)
+
+//app.use(auth)
+//app.use(adminAuth)
+app.route('/testimonials/:_id')
+.get(getOneComment)
+.patch(updateComment)
+.delete(deleteComment)
+
+
 
 
 

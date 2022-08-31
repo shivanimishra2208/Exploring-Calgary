@@ -8,6 +8,13 @@ title:{
     min: 3,
     max: 512
 
+},
+userId: {
+  type: mongoose.Schema.Types.ObjectId
+},
+isAdmin:{
+    type:Boolean,
+    default:false
 }
 })
 const CommentSchema= mongoose.model("CommentSchema",commentSchema)

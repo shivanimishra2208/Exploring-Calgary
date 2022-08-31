@@ -1,5 +1,4 @@
 
-
 deleteSVG='<button id="delete" class="btn btn-dark">Delete</button>'
 editSVG=  '<button id="edit" class="btn btn-light">Edit</button>'
  //updateSVG = ' <button id="update" class= "btn btn-danger">update</button>'
@@ -8,13 +7,14 @@ editSVG=  '<button id="edit" class="btn btn-light">Edit</button>'
 const userText=document.querySelector("#addcomment")
 const addbtn=document.querySelector("#addbutton")
 const commentsection=document.querySelector(".commentsection")
-
+const logout=document.querySelector(".logout")
 let arr=[]
 let counter=0;
 const uri='http://localhost:5500/testimonials'
+const JWT_KEY_NAME = 'jwt'
 
+const getJWT = () => localStorage.getItem(JWT_KEY_NAME)
  /*
-
 window.addEventListener('load', () => {
 const savedComment= JSON.parse(localStorage.getItem(arr))
 if(Array.isArray(savedComment)){
@@ -23,7 +23,6 @@ if(Array.isArray(savedComment)){
   counter= savedComment.length
 }
 })
-
   const saveComment=(arr)=>{
     localStorage.setItem("arr",JSON.stringify(arr))
   }*/
@@ -31,7 +30,8 @@ if(Array.isArray(savedComment)){
   const options = {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+       //Authorization: getJWT()
     }
   }
   try {
@@ -52,7 +52,8 @@ const saveComment= async titles =>{
   const options={
     method: 'POST',
     headers:{
-      "Content-Type" : 'application/json'
+      "Content-Type" : 'application/json',
+      Authorization: getJWT()
     },
     body: JSON.stringify(titles)
   }
@@ -60,6 +61,7 @@ const saveComment= async titles =>{
   try{
     const response = await fetch(uri, options)
     const data =  response.json()
+    arr=data
     console.log("data", data)
   }
   catch(err){
@@ -93,7 +95,8 @@ const saveComment= async titles =>{
    const options={
     method:"DELETE",
     Headers:{
-      "Content-Type": 'application/json'
+      "Content-Type": 'application/json',
+      Authorization: getJWT()
      }
     }
  try {
@@ -111,7 +114,8 @@ const editComment = async(id, newtext) => {
   const options={
     method: 'PATCH',
     headers:{
-      "Content-Type" : 'application/json'
+      "Content-Type" : 'application/json',
+      Authorization: getJWT()
     },
     body: JSON.stringify({title:newtext})
   }
@@ -178,10 +182,16 @@ commentsection.appendChild(mainDiv)
 
 addbtn.addEventListener( 'click',async(event) => {
     event.preventDefault()
-   addlist(userText.value, getId())
-   saveComment({title:{title: userText.value}})
-  userText.value=''
-   
+    addlist(userText.value)
+   await saveComment({title:{title:userText.value}  })
+    .then(titles => {
+      userText.value = ''
+      arr.push({titles:userText.value,
+        id:getId()
+      })
+     
+    })
+    .catch(err => console.log(err))
 })
 const getId=(isNew)=>{
   if(isNew){
@@ -190,3 +200,11 @@ const getId=(isNew)=>{
        return counter;
      }
  } 
+
+ 
+ //logout.addEventListener('submit', e => {
+//e.preventDefault()
+//localStorage.clear()
+//clearCookies(JWT_KEY_NAME)
+//window.location.href = 'http://localhost:5500/Login.html'
+//// })

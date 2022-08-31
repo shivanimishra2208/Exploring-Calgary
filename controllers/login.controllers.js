@@ -1,5 +1,6 @@
 const loginModel= require("../db/models").login
 const  bcrypt= require('bcryptjs')
+const jwt= require('jsonwebtoken')
 
 console.log(loginModel)
 const userLogin= async(req,res)=>{
@@ -9,19 +10,30 @@ const userLogin= async(req,res)=>{
         const user= await loginModel.findOne({email}).exec()
        
         if(!user){
-            res.status(401).send('Invalid email or password')
+            res.status(401).send({message:'Invalid email or password'})
             return
         }
         const isValidPassword= await bcrypt.compare(password,user.passwordHash)
         if(!isValidPassword){
-            res.status(401).send('Invalid email or password')
+            res.status(401).send({message:'Invalid email or password'})
             return
         }
-        res.send("Login Successfully")
+        const token = jwt.sign({ email }, process.env.JWT_SECRET, {
+            expiresIn: '1h'
+          })
+      
+          const JWT_KEY = process.env.JWT_KEY_NAME || 'jwt'
+          res
+            .header({ JWT_KEY: token }) // inject jwt in headers
+            .cookie(JWT_KEY, token) // inject jwt in cookies
+            .send({ token }) // keep token in body
+           
+       
+        //res.send("Login Successfully")
         
      }catch(err){
         console.error(err.message)
-        res.status(500).send('Something went wrong. Please try again later!')
+        res.status(500).send({message:'Something went wrong. Please try again later!'})
      }
   
 }
@@ -33,7 +45,7 @@ try{
        }
      const passwordHash= await bcrypt.hash(password, 10)
        const response= await loginModel.create({email,passwordHash})
-          res.send('Registration successfully done.')
+          res.send({message:'Registration successfully done.'})
           
 } catch(err){
        res.status(500).send(err.message)

@@ -91,10 +91,12 @@ body{
     height: 40px;
     
 }
-.container{
+.footer  {    
+    
     text-align: center;
-    border:1px;
-    width: fit-content;
-    height: fit-content;
-    color: darkslategray;
+   margin-bottom: 3px;
+   margin-top: 850px;
+   font-weight: bold;
+   border: 8px;
+  background-color: darkslategray;
 }
